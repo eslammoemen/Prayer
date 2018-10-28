@@ -18,7 +18,7 @@ class myViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-    networking(url: ApiUrl)
+       networking(url: ApiUrl)
        sideMenues()
        customizeNavBarColor()
     
