@@ -11,6 +11,7 @@
 		A90445792173A6CA005C805C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90445782173A6CA005C805C /* AppDelegate.swift */; };
 		A90445802173A6CC005C805C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A904457F2173A6CC005C805C /* Assets.xcassets */; };
 		A90445832173A6CC005C805C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A90445812173A6CC005C805C /* LaunchScreen.storyboard */; };
+		A92A73B5221CA71600CA7D22 /* settingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A73B4221CA71600CA7D22 /* settingsTableViewController.swift */; };
 		A9AB54CF21791DE500D09E4A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AB54CD21791DE500D09E4A /* SWRevealViewController.m */; };
 		A9AB54D121791F3300D09E4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9AB54D021791F3300D09E4A /* Main.storyboard */; };
 		A9AB54D52179225300D09E4A /* myViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AB54D42179225300D09E4A /* myViewController.swift */; };
@@ -24,6 +25,7 @@
 		A904457F2173A6CC005C805C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A90445822173A6CC005C805C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A90445842173A6CC005C805C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A92A73B4221CA71600CA7D22 /* settingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsTableViewController.swift; sourceTree = "<group>"; };
 		A9AB54CC21791DE400D09E4A /* prayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "prayer-Bridging-Header.h"; sourceTree = "<group>"; };
 		A9AB54CD21791DE500D09E4A /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		A9AB54CE21791DE500D09E4A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				A90445782173A6CA005C805C /* AppDelegate.swift */,
 				A9AB54D021791F3300D09E4A /* Main.storyboard */,
 				A9AB54D42179225300D09E4A /* myViewController.swift */,
+				A92A73B4221CA71600CA7D22 /* settingsTableViewController.swift */,
 				A904457F2173A6CC005C805C /* Assets.xcassets */,
 				A90445812173A6CC005C805C /* LaunchScreen.storyboard */,
 				A90445842173A6CC005C805C /* Info.plist */,
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92A73B5221CA71600CA7D22 /* settingsTableViewController.swift in Sources */,
 				A9AB54D52179225300D09E4A /* myViewController.swift in Sources */,
 				A90445792173A6CA005C805C /* AppDelegate.swift in Sources */,
 				A9AB54CF21791DE500D09E4A /* SWRevealViewController.m in Sources */,
