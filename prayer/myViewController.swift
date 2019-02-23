@@ -18,6 +18,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var asrTime: UILabel!
     @IBOutlet weak var maghribTime: UILabel!
     @IBOutlet weak var ishaTime: UILabel!
+    @IBOutlet weak var remainingTime: UILabel!
     
     @IBOutlet weak var leftButton: UIBarButtonItem!
     @IBOutlet weak var rightButton: UIBarButtonItem!
@@ -36,7 +37,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
     
     var timer = Timer()
     var isTimerRunning = false
-    var array = [Int]()
+   // var array = [Int]()
 
     lazy var hours = calendar.component(.hour, from: date)
     lazy var minutes = calendar.component(.minute, from: date)
@@ -58,13 +59,49 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         runTimer()
         
         hoursLabel.text = "\(hours)"
-        minutesLabel.text = ":\(minutes):"
+        minutesLabel.text = "\(minutes)"
         secondsLabel.text = "\(seconds)"
         //customizeNavBarColor()
     
     }
     
-   
+    
+    func getTimeAsInt(string: String)-> String{
+        
+        let replaced = string.replacingOccurrences(of: " (EET)", with: "")
+       
+        
+        
+        return replaced
+    }
+    
+    
+    var onlyHours = 0
+    var onlyMinutes = 0
+    
+    func calHours(time1: String ,time2: String){
+       
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let date1 = formatter.date(from: time1)!
+        let date2 = formatter.date(from: time2)!
+        
+        let elapsedTime = date2.timeIntervalSince(date1)
+        
+        let hours = floor(elapsedTime / 60 / 60)
+        let minutesOutput = floor((elapsedTime - (hours * 60 * 60)) / 60)
+        
+        let hoursModified = String(hours)
+        let result = hoursModified.replacingOccurrences(of: "-", with: "")
+        let doubleResult = Double(result)
+        
+        onlyHours = Int(doubleResult!-1)
+        onlyMinutes = Int(minutesOutput-1)
+        
+        
+    }
     
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(self.updateTimer)), userInfo: nil, repeats: true)
@@ -82,7 +119,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         if seconds == 0 {
             seconds = 60
             minutes -= 1
-            minutesLabel.text = ":\(minutes):"
+            minutesLabel.text = "\(minutes)"
             
         }
         if minutes == 0 {
@@ -94,15 +131,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         }
     }
     
-    func getTimeAsInt(string: String)-> Int{
-        var done = 0
-        if let converted = Int(string.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
-
-            done = converted
-        }
-        
-        return done
-    }
+    
         
     
     
@@ -138,7 +167,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-   
+    
     
     func parse (json :JSON){
         let day = calendar.component(.day, from: date)
@@ -151,21 +180,55 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         let month = json["data"][day-1]["date"]["hijri"]["month"]["ar"].stringValue
         let daynum = json["data"][day-1]["date"]["hijri"]["day"].stringValue
         
-        let test = json["data"][day-1]["timings"]["Maghrib"].stringValue
-        
-        print(getTimeAsInt(string: test))
         
         
         hijriDate.text = "\(dayname) - \(daynum) \(month)"
         year.text = " هـ \(json["data"][day-1]["date"]["hijri"]["year"].stringValue)"
-        fajrTime.text = json["data"][day-1]["timings"]["Fajr"].stringValue
-        shorouqTime.text = json["data"][day-1]["timings"]["Sunrise"].stringValue
-        duhrTime.text = json["data"][day-1]["timings"]["Dhuhr"].stringValue
-        asrTime.text = json["data"][day-1]["timings"]["Asr"].stringValue
-        maghribTime.text = json["data"][day-1]["timings"]["Maghrib"].stringValue
-        ishaTime.text = json["data"][day-1]["timings"]["Isha"].stringValue
-
+       
+        let fajrInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Fajr"].stringValue)
+        fajrTime.text = fajrInt
         
+        let shorouqInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Sunrise"].stringValue)
+        shorouqTime.text = shorouqInt
+        
+        let duhrInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Dhuhr"].stringValue)
+        duhrTime.text = duhrInt
+       
+        let asrInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Asr"].stringValue)
+        asrTime.text = asrInt
+        
+        let maghribInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Maghrib"].stringValue)
+        maghribTime.text = maghribInt
+        
+        let ishaInt = getTimeAsInt(string: json["data"][day-1]["timings"]["Isha"].stringValue)
+        ishaTime.text = ishaInt
+        
+        print(hours,minutes)
+        print(fajrInt)
+        if hours >= 18 || hours <= 5 {
+            remainingTime.text = "متبقي علي صلاة الفجر"
+            calHours(time1: "\(fajrInt)", time2: "\(hours-12):\(minutes)")
+            if hours >= 0 && hours <= 5 {
+                calHours(time1: "\(fajrInt)", time2: "\(hours):\(minutes)")
+
+            }
+            hoursLabel.text = String(onlyHours)
+            minutesLabel.text = String(onlyMinutes)
+            
+        }else if hours > 12 || hours <= 15 {
+            remainingTime.text = "متبقي علي صلاة العصر"
+            calHours(time1: "\(asrInt)", time2: "\(hours):\(minutes)")
+            
+            hoursLabel.text = String(onlyHours)
+            minutesLabel.text = String(onlyMinutes)
+            
+            
+        }
+        
+        print("system \(hours):\(minutes)")
+        print(" asr \(asrInt)")
+        print(calHours(time1: "\(asrInt)", time2:"\(hours):\(minutes)"))
+
         
         
         
@@ -177,7 +240,7 @@ class myViewController: UIViewController,CLLocationManagerDelegate {
         //left button animation statements
             leftButton.target = revealViewController()
             leftButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            revealViewController()?.rearViewRevealWidth = 275
+            revealViewController()?.rearViewRevealWidth = 210
            
 //        //right button animation statements
 //            rightButton.target = revealViewController()
